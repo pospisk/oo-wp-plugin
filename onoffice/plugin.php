@@ -40,7 +40,7 @@ use onOffice\WPlugin\SearchParameters;
 
 $pAutoloader = new Psr4AutoloaderClass();
 $pAutoloader->addNamespace( 'onOffice', __DIR__ );
-$pAutoloader->addNamespace( 'onOffice\SDK', __DIR__.DIRECTORY_SEPARATOR.'SDK' );
+$pAutoloader->addNamespace( 'onOffice\SDK', implode(DIRECTORY_SEPARATOR, [__DIR__, 'SDK', 'trunk', 'SDK']) );
 $pAutoloader->addNamespace( 'onOffice\WPlugin', __DIR__.DIRECTORY_SEPARATOR.'plugin' );
 $pAutoloader->register();
 

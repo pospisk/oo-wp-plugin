@@ -391,22 +391,21 @@ class EstateList {
 			$numpages = $this->_numEstatePages;
 		}
 
-		$currentRecord = each( $this->_responseArray['data']['records'] );
-
-		$this->_currentEstate['id'] = $currentRecord['value']['id'];
-		$this->_currentEstate['type'] = $currentRecord['value']['type'];
-		$this->_currentEstate['mainId'] = $this->_currentEstate['id'];
-		$recordElements = $currentRecord['value']['elements'];
-
-		if (is_array($recordElements) && array_key_exists('mainLangId', $recordElements) &&
-			$recordElements['mainLangId'] != null) {
-			$mainLangId = $recordElements['mainLangId'];
-			$this->_currentEstate['mainId'] = $mainLangId;
-		}
+		$currentRecord = current( $this->_responseArray['data']['records'] );
+		next( $this->_responseArray['data']['records'] );
 
 		if ( false !== $currentRecord ) {
-			$record = $currentRecord['value']['elements'];
-			$recordCensored = $this->getCensoredAddressData( $record );
+			$this->_currentEstate['id'] = $currentRecord['id'];
+			$this->_currentEstate['type'] = $currentRecord['type'];
+			$this->_currentEstate['mainId'] = $this->_currentEstate['id'];
+			$recordElements = $currentRecord['elements'];
+			
+			if (is_array($recordElements) && array_key_exists('mainLangId', $recordElements) &&
+				$recordElements['mainLangId'] != null) {
+				$mainLangId = $recordElements['mainLangId'];
+				$this->_currentEstate['mainId'] = $mainLangId;
+			}
+			$recordCensored = $this->getCensoredAddressData( $recordElements );
 			$pArrayContainer = new ArrayContainerEscape( $recordCensored );
 
 			return $pArrayContainer;

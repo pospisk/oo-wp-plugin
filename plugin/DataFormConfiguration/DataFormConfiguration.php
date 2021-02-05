@@ -66,6 +66,10 @@ class DataFormConfiguration
 
 	/** @var bool */
 	private $_showEstateContext = false;
+	/**
+	 * @var array
+	 */
+	private $_labels = [];
 
 	/**
 	 *
@@ -182,4 +186,20 @@ class DataFormConfiguration
 	/** @return bool */
 	public function getShowEstateContext(): bool
 		{ return $this->_showEstateContext; }
+
+
+	/**
+	 * @return array
+	 */
+	public function getFieldLabels(): array
+	{ return $this->_labels; }
+
+	/**
+	 * @param string $fieldname
+	 * @param string $fieldlabel
+	 *
+	 * @return void
+	 */
+	public function addFieldLabel(string $fieldname, string $fieldlabel)
+	{ $this->_labels[$fieldname] = $fieldlabel; }
 }

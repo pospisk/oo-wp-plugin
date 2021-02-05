@@ -47,6 +47,9 @@ abstract class FormModelBuilder
 	/** @var array */
 	private $_values = array();
 
+	/** @var array */
+	private $_labels = array();
+
 	/** @var Fieldnames */
 	private $_pFieldnames = null;
 

@@ -67,13 +67,14 @@ class InputModelBuilderCustomLabel
 	/**
 	 *
 	 * @param FieldsCollection $pFieldsCollection
-	 ** @param array $presetValuesDefaultValue
+	 ** @param array $fieldLabels
+	 *
 	 * @return InputModelDB
 	 *
 	 */
 
 	public function createInputModelCustomLabel(FieldsCollection $pFieldsCollection,
-		array $presetValuesDefaultValue): InputModelDB
+		array $fieldLabels): InputModelDB
 	{
 		$pFieldsCollectionClone = $this->cloneFieldsCollectionWithDummyField($pFieldsCollection);
 		$pInputModelFactory = new InputModelDBFactory($this->_pInputModelDBFactoryConfigForm);
@@ -83,11 +84,10 @@ class InputModelBuilderCustomLabel
 		/** @var InputModelDB $pInputModel */
 		$pInputModel = $pInputModelFactory->create($type, $label, true);
 		$pInputModel->setHtmlType(InputModelBase::HTML_TYPE_TEXT);
-		$pInputModel->setValueCallback(function(InputModelBase $pInputModel, string $key) use
-			($presetValuesDefaultValue, $pFieldsCollectionClone) {
+		$pInputModel->setValueCallback(function(InputModelBase $pInputModel, string $key) use ( $fieldLabels, $pFieldsCollectionClone) {
 				try {
 					$pField = $pFieldsCollectionClone->getFieldByKeyUnsafe($key);
-					$this->callbackValueInputModelLabelForm($pInputModel, $pField, $presetValuesDefaultValue);
+					$this->callbackValueInputModelLabelForm($pInputModel, $pField, $fieldLabels);
 				} catch (UnknownFieldException $pE) {}
 			});
 		return $pInputModel;
@@ -116,10 +116,10 @@ class InputModelBuilderCustomLabel
 	public function callbackValueInputModelLabelForm(
 		InputModelBase $pInputModel,
 		Field $pField,
-		array $presetValuesDefaultValue)
+		array $fieldsLabel)
 	{
-		$fieldsDefaultValue = $presetValuesDefaultValue[$pField->getName()] ?? '';
-		$pInputModel->setValue($fieldsDefaultValue);
+		$fieldsLabel = $fieldsLabel[$pField->getName()] ?? '';
+		$pInputModel->setValue($fieldsLabel);
 		$pInputModel->setValuesAvailable(['' => ''] + $pField->getPermittedvalues());
 		$type = self::FIELD_TYPE_TO_HTML_TYPE_MAPPING[$pField->getType()] ?? InputModelOption::HTML_TYPE_TEXT;
 		$pInputModel->setHtmlType($type);

@@ -209,6 +209,8 @@ class DataFormConfigurationFactory
 		if (array_key_exists('availableOptions', $row) && $row['availableOptions'] == 1) {
 			$pFormConfiguration->addAvailableOptionsField($fieldName);
 		}
+
+		$pFormConfiguration->addFieldLabel($row['fieldname'], $row['fieldlabel']);
 	}
 
 

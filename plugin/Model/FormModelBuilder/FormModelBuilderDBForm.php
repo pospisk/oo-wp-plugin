@@ -199,6 +199,7 @@ class FormModelBuilderDBForm
 		$values[DataFormConfiguration::FIELDS] = array_keys($pDataFormConfiguration->getInputs());
 		$values['fieldsRequired'] = $pDataFormConfiguration->getRequiredFields();
 		$values['fieldsAvailableOptions'] = $pDataFormConfiguration->getAvailableOptionsFields();
+		$values['fieldsLabels'] = $pDataFormConfiguration->getFieldLabels();
 
 		$this->setValues($values);
 		$pFormModel = new FormModel();
@@ -370,7 +371,7 @@ class FormModelBuilderDBForm
 	private function getInputModelCustomLabel(FieldsCollection $pFieldsCollection): InputModelDB
 	{
 		$pInputModelBuilder = $this->_pContainer->get(InputModelBuilderCustomLabel::class);
-		return $pInputModelBuilder->createInputModelCustomLabel($pFieldsCollection, $this->getValue('customlabel', []));
+		return $pInputModelBuilder->createInputModelCustomLabel($pFieldsCollection, $this->getValue('fieldsLabels'));
 	}
 
 

@@ -210,7 +210,7 @@ class DataFormConfigurationFactory
 			$pFormConfiguration->addAvailableOptionsField($fieldName);
 		}
 
-		$pFormConfiguration->addFieldLabel($fieldName, empty($row['fieldlabel']) ? $row['fieldlabel'] : '');
+		$pFormConfiguration->addFieldLabel($fieldName, !is_null($row['fieldlabel']) ? $row['fieldlabel'] : '');
 	}
 
 
